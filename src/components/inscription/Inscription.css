@@ -1,0 +1,97 @@
+.global-inscription {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+}
+
+.formulaire-inscription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-inscription {
+  margin-bottom: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .title-inscription {
+    font-size: 100%;
+    margin-bottom: 5%;
+  }
+  .label-name-inscription,
+  .input-name-inscription,
+  .label-mail-inscription,
+  .input-mail-inscription,
+  .label-password-inscription,
+  .input-password-inscription,
+  .label-password2-inscription,
+  .input-password2-inscription {
+    width: 70vw;
+    height: 4vh;
+  }
+  .input-name-inscription,
+  .input-mail-inscription,
+  .input-password-inscription,
+  .input-password2-inscription {
+    margin-bottom: 4%;
+  }
+  .ligne-separation-inscription {
+    width: 70vw;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .title-inscription {
+    font-size: 150%;
+    margin-bottom: 4%;
+  }
+  .label-name-inscription,
+  .input-name-inscription,
+  .label-mail-inscription,
+  .input-mail-inscription,
+  .label-password-inscription,
+  .input-password-inscription,
+  .label-password2-inscription,
+  .input-password2-inscription {
+    width: 50vw;
+    height: 4vh;
+  }
+  .input-name-inscription,
+  .input-mail-inscription,
+  .input-password-inscription,
+  .input-password2-inscription {
+    margin-bottom: 3%;
+  }
+  .ligne-separation-inscription {
+    width: 50vw;
+  }
+}
+
+@media only screen and (min-width: 901px) {
+  .title-inscription {
+    font-size: 200%;
+    margin-bottom: 4%;
+  }
+  .label-name-inscription,
+  .input-name-inscription,
+  .label-mail-inscription,
+  .input-mail-inscription,
+  .label-password-inscription,
+  .input-password-inscription,
+  .label-password2-inscription,
+  .input-password2-inscription {
+    width: 40vw;
+    height: 4vh;
+  }
+  .input-name-inscription,
+  .input-mail-inscription,
+  .input-password-inscription,
+  .input-password2-inscription {
+    margin-bottom: 3%;
+  }
+  .ligne-separation-inscription {
+    width: 40vw;
+  }
+}

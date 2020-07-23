@@ -3,14 +3,16 @@ import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import "./Connexion.css";
+import "./Inscription.css";
 
-class Connexion extends Component {
+class Inscription extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
       mail: "",
       password: "",
+      password2: "",
     };
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -23,38 +25,45 @@ class Connexion extends Component {
   }
 
   submitForm(e) {
-    const { handleConnexion } = this.props;
+    const { handleInscription } = this.props;
     e.preventDefault();
-    const { mail, password } = this.state;
-    if (!mail || !password) {
+    const { name, mail, password, password2 } = this.state;
+    if (!name || !mail || !password || !password2) {
       Swal.fire({
         icon: "warning",
         title: "Oops...",
         text: "Please provide all fields",
         timer: 3000,
       });
+    } else if (password !== password2) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Passwords must be identicals",
+        timer: 3000,
+      });
     } else {
-      const url = "/connexion";
+      const url = "/inscription";
       axios
-        .post(url, { mail, password })
+        .post(url, { name, mail, password })
         .then((res) => res.data)
         .then((res) => {
-          console.log(res.id);
+          console.log(res);
           Swal.fire({
             icon: "success",
             title: "Share My Pic",
             text: `Welcome ${res.name}!`,
             timer: 3000,
           });
-          handleConnexion(res.id);
+          handleInscription(res.id);
         })
         .catch((error) => {
           console.log("Error:", error);
-          if (error == "Error: Request failed with status code 404") {
+          if (error == "Error: Request failed with status code 409") {
             Swal.fire({
               icon: "warning",
               title: "Oops...",
-              text: "Invalid mail or password",
+              text: "Mail allready used",
               timer: 3000,
             });
           } else if (error == "Error: Request failed with status code 500") {
@@ -70,34 +79,53 @@ class Connexion extends Component {
   }
 
   render() {
-    const { mail, password } = this.state;
+    const { name, mail, password, password2 } = this.state;
     const { idUser } = this.props;
     return (
-      <div className="global-connexion">
-        <h2 className="title-connexion">Log in</h2>
+      <div className="global-inscription">
+        <h2 className="title-inscription">Sign up</h2>
         <br />
-        <form onSubmit={this.submitForm} className="formulaire-connexion">
-          <label htmlFor="mail" className="label-mail-connexion">
+        <form onSubmit={this.submitForm} className="formulaire-inscription">
+          <label htmlFor="name" className="label-name-inscription">
+            Name
+          </label>
+          <input
+            className="input-name-inscription"
+            type="text"
+            name="name"
+            onChange={this.onChange}
+            value={name}
+          />
+          <label htmlFor="mail" className="label-mail-inscription">
             Email
           </label>
           <input
-            className="input-mail-connexion"
+            className="input-mail-inscription"
             type="email"
             name="mail"
-            value={mail}
             onChange={this.onChange}
+            value={mail}
           />
-          <label htmlFor="password" className="label-password-connexion">
+          <label htmlFor="password" className="label-password-inscription">
             Password
           </label>
           <input
-            className="input-password-connexion"
+            className="input-password-inscription"
             type="password"
             name="password"
-            value={password}
             onChange={this.onChange}
+            value={password}
           />
-          <br />
+          <label htmlFor="password2" className="label-password2-inscription">
+            Confirm password
+          </label>
+          <input
+            className="input-password2-inscription"
+            type="password"
+            name="password2"
+            onChange={this.onChange}
+            value={password2}
+          />
           {idUser === 0 ? (
             <input
               type="submit"
@@ -108,22 +136,14 @@ class Connexion extends Component {
             <Redirect to="/gallery" />
           )}
         </form>
-        <hr className="ligne-separation-connexion" />
-
-        <div className="new-user-connexion">
-          <p>New user ?</p>
-          <Link to="/inscription">
-            <p className="link-to-inscription-conexion">Sign up</p>
-          </Link>
-        </div>
       </div>
     );
   }
 }
 
-Connexion.propTypes = {
-  handleConnexion: PropTypes.func.isRequired,
+Inscription.propTypes = {
+  handleInscription: PropTypes.func.isRequired,
   idUser: PropTypes.number.isRequired,
 };
 
-export default Connexion;
+export default Inscription;

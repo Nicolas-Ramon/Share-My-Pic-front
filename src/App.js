@@ -1,40 +1,56 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import './App.css';
-import Gallery from './components/gallery/Gallery';
-import Connexion from './components/connexion/Connexion';
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import "./App.css";
+import Connexion from "./components/connexion/Connexion";
+import Inscription from "./components/inscription/Inscription";
+import Gallery from "./components/gallery/Gallery";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idUtilisateur: 0,
+      idUser: 0,
     };
     this.handleConnexion = this.handleConnexion.bind(this);
+    this.handleInscription = this.handleInscription.bind(this);
   }
 
-  handleConnexion = value => {
+  handleConnexion = (value) => {
     this.setState({
-      idUtilisateur: value
+      idUser: value,
+    });
+  };
+
+  handleInscription = (value) => {
+    this.setState({
+      idUser: value,
     });
   };
 
   render() {
-    const { idUtilisateur } = this.state;
     return (
       <div className="App">
         <Router>
           <Switch>
-          <Route path="/" exact>
+            <Route path="/" exact>
               <Connexion
-                idUtilisateur={this.state.idUtilisateur}
+                idUser={this.state.idUser}
                 handleConnexion={this.handleConnexion}
               />
             </Route>
-            <Route path="/gallery" exact>
-              <Gallery
-                idUtilisateur={this.state.idUtilisateur}
+            <Route path="/inscription" exact>
+              <Inscription
+                idUser={this.state.idUser}
+                handleInscription={this.handleInscription}
               />
+            </Route>
+            <Route path="/gallery" exact>
+              <Gallery idUser={this.state.idUser} />
             </Route>
           </Switch>
         </Router>
