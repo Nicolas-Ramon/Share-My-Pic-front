@@ -11,6 +11,7 @@ class Manage extends Component {
     this.state = {
       title: "",
       url: "",
+      pictures: [],
     };
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -33,66 +34,98 @@ class Manage extends Component {
       .concat(" ", correctHour, dateTemp.slice(13, 19));
     e.preventDefault();
     if (!title || !url) {
-        Swal.fire({
-          icon: "warning",
-          title: "Oops...",
-          text: "Please provide all fields",
-          timer: 3000,
-        });
-      } else {
-    axios
-      .post("/picture", { title, url, date, user_id })
-      .then((res) => res.data)
-      .then((res) => {
-        Swal.fire({
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Please provide all fields",
+        timer: 3000,
+      });
+    } else {
+      axios
+        .post("/picture", { title, url, date, user_id })
+        .then((res) => res.data)
+        .then((res) => {
+          Swal.fire({
             icon: "success",
             title: "Congratulations !",
             text: `The pic has been added`,
             timer: 3000,
           });
-      })
-      .catch((event) => {
-        console.log(event);
-        Swal.fire({
+          this.setState({
+            title: "",
+            url: "",
+          });
+        })
+        .catch((event) => {
+          console.log(event);
+          Swal.fire({
             icon: "error",
             title: "Sorry...",
             text: "The server seems offline",
             timer: 3000,
           });
-      });
+        });
     }
   }
 
+  componentDidMount() {
+    const { idUser } = this.props;
+    const user_id = idUser;
+    axios
+      .get("/picture", {
+        params: {
+          user_id
+        },
+      })
+      .then((response) => response.data)
+      .then((picture) => {
+        console.log(picture);
+        this.setState({
+          pictures: picture,
+        });
+      });
+  }
+
   render() {
-    const { title, url } = this.state;
+    const { title, url, pictures } = this.state;
     return (
-      <div className="VideoForm container-admin">
-        <h2>Manage your pics</h2>
-        <form onSubmit={this.submitForm} className="formulaire-connexion">
-          <label htmlFor="title" className="label-title-connexion">
+      <div className="global-manage">
+        <h2 className="title-manage">Post a new pic</h2>
+        <form onSubmit={this.submitForm} className="formulaire-manage">
+          <label htmlFor="title" className="label-title-manage">
             Title of the pic
           </label>
           <input
-            className="input-title-connexion"
+            className="input-title-manage"
             type="text"
             name="title"
             value={title}
             onChange={this.onChange}
           />
-          <label htmlFor="password" className="label-url-connexion">
+          <label htmlFor="password" className="label-url-manage">
             Url of the pic
           </label>
           <input
-            className="input-url-connexion"
+            className="input-url-manage"
             type="text"
             name="url"
             value={url}
             onChange={this.onChange}
           />
-          <br />
-
-          <input type="submit" className="button-connexion" value="Add pic" />
+          <input type="submit" className="button-manage" value="Add pic" />
+          <hr className="ligne-separation-manage" />
         </form>
+        <h2 className="title-manage">Manage your pics</h2>
+        {pictures.map((picture) => (
+          <div className="one-element-manage">
+            <div className="picture-manage">
+              <img src={picture.url} alt="One pic" />
+            </div>
+            <div className="informations-manage">
+              <p>{picture.title}</p>
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
