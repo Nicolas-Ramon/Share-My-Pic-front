@@ -6,6 +6,7 @@
 @media only screen and (max-width: 600px) {
   .title-gallery {
     font-size: 100%;
+    margin-top: 10vh;
   }
   hr {
     width: 80vw;
@@ -37,6 +38,7 @@
 @media only screen and (min-width: 601px) and (max-width: 900px) {
   .title-gallery {
     font-size: 150%;
+    margin-top: 10vh;
   }
   hr {
     width: 70vw;
@@ -68,6 +70,7 @@
 @media only screen and (min-width: 901px) {
   .title-gallery {
     font-size: 200%;
+    margin-top: 10vh;
   }
   hr {
     width: 80vw;

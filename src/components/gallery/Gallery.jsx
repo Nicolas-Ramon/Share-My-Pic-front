@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
+import Navbar from '../navbar/Navbar';
 import "./Gallery.css";
 
 class Gallery extends Component {
@@ -31,11 +32,8 @@ class Gallery extends Component {
     // const { idUtilisateur } = this.props;
     return (
       <div className="global-gallery">
+        <Navbar />
         <h2 className="title-gallery">Gallery</h2>
-        <hr />
-        <Link to="manage" style={{ textDecoration: 'none' }}>
-          <p>Go to manage</p>
-        </Link>
         <hr />
         {pictures.map((picture) => (
           <div className="one-element-gallery">

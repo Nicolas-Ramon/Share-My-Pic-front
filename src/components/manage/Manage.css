@@ -16,9 +16,13 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .title-post,
   .title-manage {
     font-size: 100%;
     margin-bottom: 5%;
+  }
+  .title-post {
+    margin-top: 10vh;
   }
   .label-title-manage,
   .input-title-manage,
@@ -34,12 +38,34 @@
   .ligne-separation-manage {
     width: 70vw;
   }
+  .one-element-manage {
+    display: flex;
+    flex-direction: row;
+    margin: 5% 10% 5% 10%;
+  }
+  .picture-manage img {
+    width: 30vw;
+  }
+  .informations-manage {
+    width: 40vw;
+    text-align: left;
+    padding: 5% 0 0 5%;
+  }
+  .informations-manage p {
+    font-size: 100%;
+    font-weight: normal;
+    font-style: italic;
+  }
 }
 
 @media only screen and (min-width: 601px) and (max-width: 900px) {
+  .title-post,
   .title-manage {
     font-size: 150%;
     margin-bottom: 4%;
+  }
+  .title-post {
+    margin-top: 10vh;
   }
   .label-title-manage,
   .input-title-manage,
@@ -55,12 +81,34 @@
   .ligne-separation-manage {
     width: 50vw;
   }
+  .one-element-manage {
+    display: flex;
+    flex-direction: row;
+    margin: 5% 10% 5% 10%;
+  }
+  .picture-manage img {
+    width: 30vw;
+  }
+  .informations-manage {
+    width: 40vw;
+    text-align: left;
+    padding: 5% 0 0 5%;
+  }
+  .informations-manage p {
+    font-size: 100%;
+    font-weight: normal;
+    font-style: italic;
+  }
 }
 
 @media only screen and (min-width: 901px) {
+  .title-post,
   .title-manage {
     font-size: 200%;
     margin-bottom: 4%;
+  }
+  .title-post {
+    margin-top: 10vh;
   }
   .label-title-manage,
   .input-title-manage,
@@ -83,10 +131,10 @@
     margin: 5% 10% 5% 10%;
   }
   .picture-manage img {
-    width: 20vw;
+    width: 30vw;
   }
   .informations-manage {
-    width: 30vw;
+    width: 40vw;
     text-align: left;
     padding: 5% 0 0 5%;
   }
