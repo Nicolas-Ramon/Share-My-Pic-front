@@ -3,6 +3,7 @@ import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
+import Navbar from '../navbar/Navbar';
 import "./Manage.css";
 
 class Manage extends Component {
@@ -14,7 +15,7 @@ class Manage extends Component {
       pictures: [],
     };
     this.onChange = this.onChange.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    this.submitPostPic = this.submitPostPic.bind(this);
   }
 
   onChange(e) {
@@ -23,7 +24,7 @@ class Manage extends Component {
     });
   }
 
-  submitForm(e) {
+  submitPostPic(e) {
     const { title, url } = this.state;
     const { idUser } = this.props;
     const user_id = idUser;
@@ -74,7 +75,7 @@ class Manage extends Component {
     axios
       .get("/picture", {
         params: {
-          user_id
+          user_id,
         },
       })
       .then((response) => response.data)
@@ -90,8 +91,9 @@ class Manage extends Component {
     const { title, url, pictures } = this.state;
     return (
       <div className="global-manage">
-        <h2 className="title-manage">Post a new pic</h2>
-        <form onSubmit={this.submitForm} className="formulaire-manage">
+        <Navbar />
+        <h2 className="title-post">Post a new pic</h2>
+        <form onSubmit={this.submitPostPic} className="formulaire-manage">
           <label htmlFor="title" className="label-title-manage">
             Title of the pic
           </label>
