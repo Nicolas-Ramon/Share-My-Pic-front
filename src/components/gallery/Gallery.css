@@ -12,11 +12,8 @@
   }
   .one-element-gallery {
     display: flex;
-    flex-direction: row;
-    margin: 4% 0 4% 0;
-  }
-  .one-element-gallery {
     flex-direction: column;
+    margin: 4% 0 4% 0;
   }
   .picture-gallery img {
     width: 80vw;
