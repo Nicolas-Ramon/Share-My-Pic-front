@@ -3,7 +3,7 @@ import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import Navbar from '../navbar/Navbar';
+import Navbar from "../navbar/Navbar";
 import "./Manage.css";
 
 class Manage extends Component {
@@ -67,6 +67,19 @@ class Manage extends Component {
           });
         });
     }
+    axios
+      .get("/picture", {
+        params: {
+          user_id,
+        },
+      })
+      .then((response) => response.data)
+      .then((picture) => {
+        console.log(picture);
+        this.setState({
+          pictures: picture,
+        });
+      });
   }
 
   componentDidMount() {
