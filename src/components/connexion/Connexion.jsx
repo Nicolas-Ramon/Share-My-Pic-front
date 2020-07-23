@@ -43,7 +43,7 @@ class Connexion extends Component {
           Swal.fire({
             icon: "success",
             title: "Share My Pic",
-            text: `Welcome ${res.name}!`,
+            text: `Welcome back ${res.name}!`,
             timer: 3000,
           });
           handleConnexion(res.id);
