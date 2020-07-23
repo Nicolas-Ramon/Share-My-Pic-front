@@ -13,9 +13,11 @@ class Manage extends Component {
       title: "",
       url: "",
       pictures: [],
+      idPic: "",
     };
     this.onChange = this.onChange.bind(this);
     this.submitPostPic = this.submitPostPic.bind(this);
+    this.deletePic = this.deletePic.bind(this);
   }
 
   onChange(e) {
@@ -100,6 +102,34 @@ class Manage extends Component {
       });
   }
 
+  deletePic(id) {
+    const { idUser } = this.props;
+    const user_id = idUser;
+    axios
+      .delete("/picture", {
+        params: {
+          id,
+        },
+      })
+      .then((response) => response.data)
+      .then((picture) => {
+        console.log(picture);
+        axios
+          .get("/picture", {
+            params: {
+              user_id,
+            },
+          })
+          .then((response) => response.data)
+          .then((picture) => {
+            console.log(picture);
+            this.setState({
+              pictures: picture,
+            });
+          });
+      });
+  }
+
   render() {
     const { title, url, pictures } = this.state;
     return (
@@ -139,6 +169,13 @@ class Manage extends Component {
             <div className="informations-manage">
               <p>{picture.title}</p>
             </div>
+            <button
+              type="button"
+              key={picture.id}
+              onClick={() => this.deletePic(picture.id)}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
