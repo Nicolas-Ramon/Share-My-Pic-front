@@ -1,0 +1,79 @@
+.global-connexion {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+}
+
+.formulaire-connexion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-connexion {
+    margin-bottom: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+    .title-connexion {
+        font-size: 100%;
+        margin-bottom: 5%;
+      }
+      .label-mail-connexion,
+      .input-mail-connexion,
+      .label-password-connexion,
+      .input-password-connexion {
+        width: 70vw;
+        height: 4vh;
+      }
+      .input-mail-connexion,
+      .input-password-connexion {
+        margin-bottom: 4%;
+      }
+      .ligne-separation-connexion {
+        width: 70vw;
+      }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+    .title-connexion {
+        font-size: 150%;
+        margin-bottom: 4%;
+      }
+      .label-mail-connexion,
+      .input-mail-connexion,
+      .label-password-connexion,
+      .input-password-connexion {
+        width: 50vw;
+        height: 4vh;
+      }
+      .input-mail-connexion,
+      .input-password-connexion {
+        margin-bottom: 3%;
+      }
+      .ligne-separation-connexion {
+        width: 50vw;
+      }
+}
+
+@media only screen and (min-width: 901px) {
+  .title-connexion {
+    font-size: 200%;
+    margin-bottom: 4%;
+  }
+  .label-mail-connexion,
+  .input-mail-connexion,
+  .label-password-connexion,
+  .input-password-connexion {
+    width: 40vw;
+    height: 4vh;
+  }
+  .input-mail-connexion,
+  .input-password-connexion {
+    margin-bottom: 3%;
+  }
+  .ligne-separation-connexion {
+    width: 40vw;
+  }
+}
