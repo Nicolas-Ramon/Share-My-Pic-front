@@ -9,6 +9,7 @@ import "./App.css";
 import Connexion from "./components/connexion/Connexion";
 import Inscription from "./components/inscription/Inscription";
 import Gallery from "./components/gallery/Gallery";
+import Manage from "./components/manage/Manage";
 
 class App extends Component {
   constructor(props) {
@@ -51,6 +52,9 @@ class App extends Component {
             </Route>
             <Route path="/gallery" exact>
               <Gallery idUser={this.state.idUser} />
+            </Route>
+            <Route path="/manage" exact>
+              <Manage idUser={this.state.idUser} />
             </Route>
           </Switch>
         </Router>
