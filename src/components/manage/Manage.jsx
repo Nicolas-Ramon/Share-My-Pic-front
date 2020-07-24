@@ -13,9 +13,13 @@ class Manage extends Component {
       title: "",
       url: "",
       pictures: [],
+      isUpdateButton: false,
+      idToUpdate: "",
     };
     this.onChange = this.onChange.bind(this);
     this.submitPostPic = this.submitPostPic.bind(this);
+    this.deletePic = this.deletePic.bind(this);
+    this.updatePic = this.updatePic.bind(this);
   }
 
   onChange(e) {
@@ -25,61 +29,112 @@ class Manage extends Component {
   }
 
   submitPostPic(e) {
-    const { title, url } = this.state;
+    const { title, url, isUpdateButton, idToUpdate } = this.state;
     const { idUser } = this.props;
     const user_id = idUser;
-    const correctHour = parseInt(new Date().toISOString().slice(11, 13)) + 2;
-    const dateTemp = new Date().toISOString().slice(0, 19);
-    const date = dateTemp
-      .slice(0, 10)
-      .concat(" ", correctHour, dateTemp.slice(13, 19));
     e.preventDefault();
-    if (!title || !url) {
-      Swal.fire({
-        icon: "warning",
-        title: "Oops...",
-        text: "Please provide all fields",
-        timer: 3000,
-      });
-    } else {
+    if (isUpdateButton === false) {
+      const correctHour = parseInt(new Date().toISOString().slice(11, 13)) + 2;
+      const dateTemp = new Date().toISOString().slice(0, 19);
+      const date = dateTemp
+        .slice(0, 10)
+        .concat(" ", correctHour, dateTemp.slice(13, 19));
+      if (!title || !url) {
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please provide all fields",
+          timer: 3000,
+        });
+      } else {
+        axios
+          .post("/picture", { title, url, date, user_id })
+          .then((res) => res.data)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "Congratulations !",
+              text: `The pic has been added`,
+              timer: 3000,
+            });
+            this.setState({
+              title: "",
+              url: "",
+            });
+          })
+          .catch((event) => {
+            console.log(event);
+            Swal.fire({
+              icon: "error",
+              title: "Sorry...",
+              text: "The server seems offline",
+              timer: 3000,
+            });
+          });
+      }
       axios
-        .post("/picture", { title, url, date, user_id })
-        .then((res) => res.data)
-        .then((res) => {
-          Swal.fire({
-            icon: "success",
-            title: "Congratulations !",
-            text: `The pic has been added`,
-            timer: 3000,
-          });
-          this.setState({
-            title: "",
-            url: "",
-          });
+        .get("/picture", {
+          params: {
+            user_id,
+          },
         })
-        .catch((event) => {
-          console.log(event);
-          Swal.fire({
-            icon: "error",
-            title: "Sorry...",
-            text: "The server seems offline",
-            timer: 3000,
+        .then((response) => response.data)
+        .then((picture) => {
+          console.log(picture);
+          this.setState({
+            pictures: picture,
+          });
+        });
+    } else {
+      if (!title || !url) {
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please provide all fields",
+          timer: 3000,
+        });
+      } else {
+        const id = idToUpdate;
+        axios
+          .put(`/picture/${id}`, { title, url })
+          .then((res) => res.data)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "Congratulations !",
+              text: `The pic has been updated`,
+              timer: 3000,
+            });
+            this.setState({
+              title: "",
+              url: "",
+              isUpdateButton: false
+            });
+          })
+          .catch((event) => {
+            console.log(event);
+            Swal.fire({
+              icon: "error",
+              title: "Sorry...",
+              text: "The server seems offline",
+              timer: 3000,
+            });
+          });
+      }
+      axios
+        .get("/picture", {
+          params: {
+            user_id,
+          },
+        })
+        .then((response) => response.data)
+        .then((picture) => {
+          console.log(picture);
+          this.setState({
+            pictures: picture,
           });
         });
     }
-    axios
-      .get("/picture", {
-        params: {
-          user_id,
-        },
-      })
-      .then((response) => response.data)
-      .then((picture) => {
-        console.log(picture);
-        this.setState({
-          pictures: picture,
-        });
-      });
   }
 
   componentDidMount() {
@@ -100,8 +155,45 @@ class Manage extends Component {
       });
   }
 
+  deletePic(id) {
+    const { idUser } = this.props;
+    const user_id = idUser;
+    axios
+      .delete("/picture", {
+        params: {
+          id,
+        },
+      })
+      .then((response) => response.data)
+      .then((picture) => {
+        console.log(picture);
+        axios
+          .get("/picture", {
+            params: {
+              user_id,
+            },
+          })
+          .then((response) => response.data)
+          .then((picture) => {
+            console.log(picture);
+            this.setState({
+              pictures: picture,
+            });
+          });
+      });
+  }
+
+  updatePic(title, url, id) {
+    this.setState({
+      title: title,
+      url: url,
+      idToUpdate: id,
+      isUpdateButton: true,
+    });
+  }
+
   render() {
-    const { title, url, pictures } = this.state;
+    const { title, url, pictures, isUpdateButton } = this.state;
     return (
       <div className="global-manage">
         <Navbar />
@@ -127,7 +219,11 @@ class Manage extends Component {
             value={url}
             onChange={this.onChange}
           />
-          <input type="submit" className="button-manage" value="Add pic" />
+          {isUpdateButton === false ? (
+            <input type="submit" className="button-manage" value="Add pic" />
+          ) : (
+            <input type="submit" className="button-manage" value="Update pic" />
+          )}
           <hr className="ligne-separation-manage" />
         </form>
         <h2 className="title-manage">Manage your pics</h2>
@@ -139,6 +235,22 @@ class Manage extends Component {
             <div className="informations-manage">
               <p>{picture.title}</p>
             </div>
+            <button
+              type="button"
+              key={picture.id}
+              onClick={() => this.deletePic(picture.id)}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              key={picture.id}
+              onClick={() =>
+                this.updatePic(picture.title, picture.url, picture.id)
+              }
+            >
+              Update
+            </button>
           </div>
         ))}
       </div>
