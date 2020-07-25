@@ -237,14 +237,14 @@ class Manage extends Component {
             </div>
             <button
               type="button"
-              key={picture.id}
+              // key={picture.id}
               onClick={() => this.deletePic(picture.id)}
             >
               Delete
             </button>
             <button
               type="button"
-              key={picture.id}
+              // key={picture.id}
               onClick={() =>
                 this.updatePic(picture.title, picture.url, picture.id)
               }
