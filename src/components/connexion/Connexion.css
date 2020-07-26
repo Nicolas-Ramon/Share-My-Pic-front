@@ -3,6 +3,9 @@
   flex-direction: column;
   text-align: center;
   height: 100vh;
+  background-image: url(../img/fond2.jpg);
+  background-position: center top;
+  background-size: 100% auto;
 }
 
 .formulaire-connexion {

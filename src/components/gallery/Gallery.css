@@ -1,6 +1,10 @@
 .global-gallery {
   display: flex;
   flex-direction: column;
+  background-image: url(../img/fond2.jpg);
+  background-position: center top;
+  background-size: 100% auto;
+  opacity: 0.9;
 }
 
 @media only screen and (max-width: 600px) {
@@ -11,27 +15,42 @@
   hr {
     width: 80vw;
   }
+  .formulaire-search-gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2%;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .input-title-gallery,
+  .input-author-gallery {
+    width: 10vw;
+  }
   .one-element-gallery {
     display: flex;
     flex-direction: column;
-    margin: 4% 0 4% 0;
+    margin: 4% 0 15% 0;
+    align-items: center;
   }
   .picture-gallery img {
     width: 80vw;
+    border: black solid;
+    border-radius: 2%;
   }
   .informations-gallery {
     text-align: center;
     padding-left: 0;
-  }
-  .informations-gallery :first-child {
-    font-size: 110%;
-    font-weight: bold;
-    font-style: italic;
+    width: 80vw;
   }
   .informations-gallery p {
     font-size: 100%;
     font-weight: normal;
     font-style: italic;
+  }
+  .informations-gallery :nth-child(3) {
+    font-weight: bold;
   }
 }
 
@@ -43,27 +62,42 @@
   hr {
     width: 70vw;
   }
+  .formulaire-search-gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2%;
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .input-title-gallery,
+  .input-author-gallery {
+    width: 15vw;
+  }
   .one-element-gallery {
     display: flex;
     flex-direction: column;
-    margin: 4% 0 4% 0;
+    margin: 4% 0 8% 0;
+    align-items: center;
   }
   .picture-gallery img {
     width: 70vw;
+    border: black solid;
+    border-radius: 2%;
   }
   .informations-gallery {
     text-align: center;
     padding-left: 0;
-  }
-  .informations-gallery :first-child {
-    font-size: 130%;
-    font-weight: bold;
-    font-style: italic;
+    width: 70vw;
   }
   .informations-gallery p {
     font-size: 100%;
     font-weight: normal;
     font-style: italic;
+  }
+  .informations-gallery :nth-child(3) {
+    font-weight: bold;
   }
 }
 
@@ -75,27 +109,41 @@
   hr {
     width: 80vw;
   }
+  .formulaire-search-gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2%;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .input-title-gallery,
+  .input-author-gallery {
+    width: 20vw;
+  }
   .one-element-gallery {
     display: flex;
     flex-direction: row;
-    margin: 5% 10% 5% 10%;
+    margin: 5% 5% 5% 5%;
   }
   .picture-gallery img {
     width: 60vw;
+    border: black solid;
+    border-radius: 2%;
   }
   .informations-gallery {
+    display: flex;
+    flex-direction: column;
     width: 60vw;
-    text-align: left;
-    padding: 5% 0 0 5%;
-  }
-  .informations-gallery :first-child {
-    font-size: 150%;
-    font-weight: bold;
-    font-style: italic;
+    padding: 0 0 0 5%;
   }
   .informations-gallery p {
     font-size: 100%;
-    font-weight: normal;
     font-style: italic;
+  }
+  .informations-gallery :nth-child(3) {
+    font-weight: bold;
+    margin-top: 25%;
   }
 }

@@ -3,11 +3,12 @@
   flex-direction: row;
   list-style: none;
   justify-content: space-around;
-  background-color: #ee6e62;
+  background-color: rgb(17, 16, 16);
   position: fixed;
   height: 8vh;
   width: 100vw;
   margin-top: 0;
+  padding-left: 0;
 }
 
 .link-navbar {
