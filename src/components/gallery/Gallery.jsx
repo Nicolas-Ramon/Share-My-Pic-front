@@ -3,6 +3,7 @@ import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
 import Navbar from "../navbar/Navbar";
+// import Fond from "../img/fond.jpg";
 import "./Gallery.css";
 
 class Gallery extends Component {
@@ -43,7 +44,7 @@ class Gallery extends Component {
       .get("/picture", {
         params: {
           name,
-          title
+          title,
         },
       })
       .then((response) => response.data)
@@ -64,25 +65,25 @@ class Gallery extends Component {
         <hr />
         <form onSubmit={this.searchForm} className="formulaire-search-gallery">
           <label htmlFor="author" className="label-author-gallery">
-            Author
+            Author: 
+            <input
+              className="input-author-gallery"
+              type="text"
+              name="author"
+              value={author}
+              onChange={this.onChange}
+            />
           </label>
-          <input
-            className="input-author-gallery"
-            type="text"
-            name="author"
-            value={author}
-            onChange={this.onChange}
-          />
           <label htmlFor="title" className="label-title-gallery">
-            Title
+            Title: 
+            <input
+              className="input-title-gallery"
+              type="text"
+              name="title"
+              value={title}
+              onChange={this.onChange}
+            />
           </label>
-          <input
-            className="input-title-gallery"
-            type="text"
-            name="title"
-            value={title}
-            onChange={this.onChange}
-          />
           <input
             type="submit"
             className="button-search-gallery"
@@ -95,9 +96,9 @@ class Gallery extends Component {
               <img src={picture.url} alt="One pic" />
             </div>
             <div className="informations-gallery">
+              <p>Date : {picture.date.slice(0, 10)}</p>
+              <p>Author : {picture.name}</p>
               <p>{picture.title}</p>
-              <p>{picture.date.slice(0, 10)}</p>
-              <p>{picture.name}</p>
             </div>
           </div>
         ))}

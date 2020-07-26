@@ -108,7 +108,7 @@ class Manage extends Component {
             this.setState({
               title: "",
               url: "",
-              isUpdateButton: false
+              isUpdateButton: false,
             });
           })
           .catch((event) => {
@@ -234,21 +234,23 @@ class Manage extends Component {
             </div>
             <div className="informations-manage">
               <p>{picture.title}</p>
+              <button
+                className="delete-button"
+                type="button"
+                onClick={() => this.deletePic(picture.id)}
+              >
+                Delete
+              </button>
+              <button
+                className="update-button"
+                type="button"
+                onClick={() =>
+                  this.updatePic(picture.title, picture.url, picture.id)
+                }
+              >
+                Update
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={() => this.deletePic(picture.id)}
-            >
-              Delete
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                this.updatePic(picture.title, picture.url, picture.id)
-              }
-            >
-              Update
-            </button>
           </div>
         ))}
       </div>
