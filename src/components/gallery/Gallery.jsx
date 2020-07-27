@@ -3,7 +3,7 @@ import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 // import PropTypes from 'prop-types';
 import Navbar from "../navbar/Navbar";
-// import Fond from "../img/fond.jpg";
+import Heart from "../img/heart2.png";
 import "./Gallery.css";
 
 class Gallery extends Component {
@@ -16,11 +16,19 @@ class Gallery extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.searchForm = this.searchForm.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
+    const { author, title } = this.state;
+    const name = author;
     axios
-      .get("/picture")
+      .get("/picture", {
+        params: {
+          name,
+          title,
+        },
+      })
       .then((response) => response.data)
       .then((picture) => {
         console.log(picture);
@@ -34,6 +42,68 @@ class Gallery extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
+  }
+
+  onClick(user, picture) {
+    const { author, title } = this.state;
+    const name = author;
+    axios
+      .get("/favorite", {
+        params: {
+          user,
+          picture,
+        },
+      })
+      .then((response) => response.data)
+      .then((test) => {
+        if (test) {
+          axios
+            .delete("/favorite", {
+              params: {
+                user,
+                picture,
+              },
+            })
+            .then((response) => response.data)
+            .then((del) => {
+              axios
+                .get("/picture", {
+                  params: {
+                    name,
+                    title,
+                  },
+                })
+                .then((response) => response.data)
+                .then((picture) => {
+                  console.log(picture);
+                  this.setState({
+                    pictures: picture,
+                  });
+                });
+            });
+        }
+      })
+      .catch((error) => {
+        axios
+          .post("/favorite", { user, picture })
+          .then((response) => response.data)
+          .then((add) => {
+            axios
+              .get("/picture", {
+                params: {
+                  name,
+                  title,
+                },
+              })
+              .then((response) => response.data)
+              .then((picture) => {
+                console.log(picture);
+                this.setState({
+                  pictures: picture,
+                });
+              });
+          });
+      });
   }
 
   searchForm(e) {
@@ -58,6 +128,7 @@ class Gallery extends Component {
 
   render() {
     const { pictures, author, title } = this.state;
+    const { idUser } = this.props;
     return (
       <div className="global-gallery">
         <Navbar />
@@ -65,7 +136,7 @@ class Gallery extends Component {
         <hr />
         <form onSubmit={this.searchForm} className="formulaire-search-gallery">
           <label htmlFor="author" className="label-author-gallery">
-            Author: 
+            Author:
             <input
               className="input-author-gallery"
               type="text"
@@ -75,7 +146,7 @@ class Gallery extends Component {
             />
           </label>
           <label htmlFor="title" className="label-title-gallery">
-            Title: 
+            Title:
             <input
               className="input-title-gallery"
               type="text"
@@ -93,7 +164,14 @@ class Gallery extends Component {
         {pictures.map((picture) => (
           <div className="one-element-gallery">
             <div className="picture-gallery">
-              <img src={picture.url} alt="One pic" />
+              <img className="pic-gallery" src={picture.url} alt="One pic" />
+              <div
+                className="heart-like-gallery"
+                onClick={() => this.onClick(idUser, picture.id)}
+              >
+                <img src={Heart} alt="Heart pic" />
+                <p>{picture.nblike}</p>
+              </div>
             </div>
             <div className="informations-gallery">
               <p>Date : {picture.date.slice(0, 10)}</p>
