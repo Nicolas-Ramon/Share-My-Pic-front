@@ -158,29 +158,47 @@ class Manage extends Component {
   deletePic(id) {
     const { idUser } = this.props;
     const user_id = idUser;
-    axios
-      .delete("/picture", {
-        params: {
-          id,
-        },
-      })
-      .then((response) => response.data)
-      .then((picture) => {
-        console.log(picture);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
         axios
-          .get("/picture", {
+          .delete("/picture", {
             params: {
-              user_id,
+              id,
             },
           })
           .then((response) => response.data)
           .then((picture) => {
-            console.log(picture);
-            this.setState({
-              pictures: picture,
+            Swal.fire({
+              icon: "success",
+              title: "Done !",
+              text: `The pic has been deleted`,
+              timer: 3000,
             });
+            console.log(picture);
+            axios
+              .get("/picture", {
+                params: {
+                  user_id,
+                },
+              })
+              .then((response) => response.data)
+              .then((picture) => {
+                console.log(picture);
+                this.setState({
+                  pictures: picture,
+                });
+              });
           });
-      });
+      }
+    });
   }
 
   updatePic(title, url, id) {
