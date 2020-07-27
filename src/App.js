@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import "./App.css";
+import Homepage from "./components/homepage/Homepage";
 import Connexion from "./components/connexion/Connexion";
 import Inscription from "./components/inscription/Inscription";
 import Gallery from "./components/gallery/Gallery";
@@ -16,9 +17,11 @@ class App extends Component {
     super(props);
     this.state = {
       idUser: 0,
+      isClicked: false,
     };
     this.handleConnexion = this.handleConnexion.bind(this);
     this.handleInscription = this.handleInscription.bind(this);
+    this.handleClicked = this.handleClicked.bind(this);
   }
 
   handleConnexion = (value) => {
@@ -33,12 +36,28 @@ class App extends Component {
     });
   };
 
+  handleClicked = (value) => {
+    this.setState({
+      isClicked: true
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <Router>
           <Switch>
-            <Route path="/" exact>
+          <Route path="/" exact>
+              {this.state.isClicked === true ? (
+                <Redirect to="/connexion" />
+              ) : (
+                <Homepage
+                isClicked={this.state.isClicked}
+                handleClicked={this.handleClicked}
+                />
+              )}
+            </Route>
+            <Route path="/connexion" exact>
               <Connexion
                 idUser={this.state.idUser}
                 handleConnexion={this.handleConnexion}
